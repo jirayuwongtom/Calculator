@@ -12,6 +12,10 @@ public class ProjectCalculater {
         this.setOP(operator);
     }
 
+    public void calculate() {
+
+    }
+    
     public int getX() {
         return x;
     }
