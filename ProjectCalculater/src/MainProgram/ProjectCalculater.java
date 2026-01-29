@@ -29,6 +29,8 @@ public class ProjectCalculater {
         }else{
             System.out.println("Invalid operator");
         }
+
+        System.out.printf("HELLO TIME");
         input.close();
     }
 }
