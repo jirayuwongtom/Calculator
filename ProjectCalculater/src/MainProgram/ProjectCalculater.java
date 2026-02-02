@@ -1,6 +1,7 @@
 package MainProgram;
+import java.util.Scanner;
 
-public class ProjectCalculater {
+class ProjectCalculater {
     protected int x;
     protected int y;
     protected String operator;
@@ -36,4 +37,14 @@ public class ProjectCalculater {
     public void setOP(String operator) {
         this.operator = operator;
     }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        input.close();
+    }
+
+
+
+
 }
