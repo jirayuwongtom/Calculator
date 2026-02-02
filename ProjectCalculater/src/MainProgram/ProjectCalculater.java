@@ -1,41 +1,33 @@
 package MainProgram;
 import java.util.Scanner;
 
-class ProjectCalculater {
-    protected int x;
-    protected int y;
-    protected String operator;
-    protected int result;
+public class ProjectCalculater {
+    class Calculator {
+        protected int x;
+        protected int y;
 
-    public ProjectCalculater(int x, int y , String operator) {
-        this.setX(x); 
-        this.setY(y); 
-        this.setOP(operator);
-    }
-
-    public void calculate() {
-
-    }
-    
-    public int getX() {
-        return x;
-    }
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-    public void setY(int y) {
-        this.y = y;
+        public Calculator(int x, int y) {
+            this.x = x; 
+            this.y = y; 
+        }
+         public int getX() {
+            return x;
+        }
+        public void setX(int x) {
+            this.x = x;
+        }
+        public int getY() {
+            return y;
+        }
+        public void setY(int y) {
+            this.y = y;
+        }
     }
 
-    public String getOP() {
-        return operator;
-    }
-    public void setOP(String operator) {
-        this.operator = operator;
+    class AddCalculator extends Calculator {
+        public AddCalculator(int x , int y) {
+            super(x , y);
+        }
     }
 
     public static void main(String[] args) {
