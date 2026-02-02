@@ -30,40 +30,9 @@ public class ProjectCalculater {
         }
     }
 
-
-public int getResult() {
-    return this.result;
-}
-
-public void calculate_process() {
-        if (this.operator.equals("+")) {
-            this.result = this.x + this.y;
-        } 
-        else if (this.operator.equals("-")) {
-            this.result = this.x - this.y;
-        } 
-        else if (this.operator.equals("*")) {
-            this.result = this.x * this.y;
-        } 
-        else if (this.operator.equals("/")) {
-            if (this.y != 0) {
-                this.result = this.x / this.y;
-            } else {
-                System.out.println("Error: Cannot divide by zero");
-                this.result = 0;
-            }
-        } 
-        else {
-            System.out.println("Invalid Operator");
-        }
-    }
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
         input.close();
     }
-
-
-
-
 }
