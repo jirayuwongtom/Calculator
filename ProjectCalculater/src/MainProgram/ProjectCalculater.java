@@ -1,6 +1,7 @@
 package MainProgram;
+import java.util.Scanner;
 
-public class ProjectCalculater {
+class ProjectCalculater {
     protected int x;
     protected int y;
     protected String operator;
@@ -64,4 +65,13 @@ public void calculate_process() {
             System.out.println("Invalid Operator");
         }
     }
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        input.close();
+    }
+
+
+
+
 }
