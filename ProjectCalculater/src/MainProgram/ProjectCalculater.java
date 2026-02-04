@@ -40,7 +40,7 @@ public class ProjectCalculater {
         public Division(int x, int y) { super(x, y); }
         public int divide() { return (y == 0) ? 0 : x / y; }
     }
-    //เพิ่มเติมคลาส multiplication และ division ที่สืบทอดมาจากคลาส Calculator 
+    //เพิ่มเติมคลาส multiplication และ division ที่สืบทอดมาจากคลาส Calculator ok ป่าว
     //--------------------------------
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
