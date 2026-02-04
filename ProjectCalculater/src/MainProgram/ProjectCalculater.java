@@ -40,6 +40,9 @@ public class ProjectCalculater {
         public Subtraction(int x , int y) {
             super(x , y);
         }
+
+        public int add() { return x + y; }
+
         public int subtract() {
             return this.x - this.y;
         }
@@ -47,7 +50,19 @@ public class ProjectCalculater {
             return currentTotal - newValue;
         }
     }
-
+    //--------------------------------
+    //ตรงนี้เป็น class การคูณ
+    class Multiplication extends Calculator {
+        public Multiplication(int x, int y) { super(x, y); }
+        public int multiply() { return x * y; }
+    }
+    //ตรงนี้เป็น class การหาร
+    class Division extends Calculator {
+        public Division(int x, int y) { super(x, y); }
+        public int divide() { return (y == 0) ? 0 : x / y; }
+    }
+    //เพิ่มเติมคลาส multiplication และ division ที่สืบทอดมาจากคลาส Calculator 
+    //--------------------------------
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter your expression : ");
