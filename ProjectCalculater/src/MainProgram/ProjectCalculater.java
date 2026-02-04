@@ -6,72 +6,58 @@ public class ProjectCalculater {
             return x; 
         } 
     }
-
-    class Addition extends Calculator {
-        public Addition(int x , int y) {
-            super(x , y); 
-        }
-        public int add() {
-            return this.x + this.y;
-        }
-        public int addTo(int currentTotal, int newValue) {
-            return currentTotal + newValue;
-        }
+    static class Add extends Calculator { 
+        public double calculate(double x, double y) { 
+            return x + y; 
+        } 
     }
-
-    class Subtraction extends Calculator {
-        public Subtraction(int x , int y) {
-            super(x , y);
-        }
-
-        public int add() { return x + y; }
-
-        public int subtract() {
-            return this.x - this.y;
-        }
-        public int subtractTo(int currentTotal, int newValue) {
-            return currentTotal - newValue;
-        }
+    static class Subtract extends Calculator { 
+        public double calculate(double x, double y) { 
+            return x - y; 
+        } 
     }
-    //--------------------------------
-    //ตรงนี้เป็น class การคูณ
-    class Multiplication extends Calculator {
-        public Multiplication(int x, int y) { super(x, y); }
-        public int multiply() { return x * y; }
-    }
-    //ตรงนี้เป็น class การหาร
-    class Division extends Calculator {
-        public Division(int x, int y) { super(x, y); }
-        public int divide() { return (y == 0) ? 0 : x / y; }
-    }
-    //เพิ่มเติมคลาส multiplication และ division ที่สืบทอดมาจากคลาส Calculator 
-    //--------------------------------
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Enter your expression : ");
-        String expression = input.nextLine().replace(" ", "");
-
-        ProjectCalculater pc = new ProjectCalculater();
-        Addition addObj = pc.new Addition(0, 0);
-        Subtraction subObj = pc.new Subtraction(0, 0);
-
-        String[] parts = expression.split("(?=[+-])");
-        
-        int total = 0;
-
-        for (String part : parts) {
-            if (part.startsWith("+")) {
-                int val = Integer.parseInt(part.substring(1));
-                total = addObj.addTo(total, val);
-            } else if (part.startsWith("-")) {
-                int val = Integer.parseInt(part.substring(1));
-                total = subObj.subtractTo(total, val);
-            } else {
-                total = Integer.parseInt(part);
+        Scanner scan = new Scanner(System.in);
+        System.out.print("โจทย์ : ");
+        String input = scan.nextLine(); 
+        input = input.replace(" ", "");
+        double[] numbers = new double[100]; 
+        char[] operators = new char[100];
+        int numCount = 0;
+        int opCount = 0;
+        String tempNum = "";
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c != '+' && c != '-') {
+                tempNum += c;
+            }
+            if (c == '+' || c == '-' || i == input.length() - 1) {
+                if(tempNum.isEmpty()) continue;
+                
+                numbers[numCount++] = Double.valueOf(tempNum);
+                tempNum = ""; 
+                
+                if (i < input.length() - 1) {
+                    operators[opCount++] = c;
+                }
             }
         }
+        double finalResult = numbers[0]; 
+        for (int i = 0; i < opCount; i++) {
+            char op = operators[i];
+            double nextNumber = numbers[i+1];
+            double oldResult = finalResult; 
 
-        System.out.println("Result: " + total);
-        input.close();
+            Calculator calc = null;
+            if (op == '+') calc = new Add();
+            else if (op == '-') calc = new Subtract();
+            
+            if (calc != null) {
+                finalResult = calc.calculate(finalResult, nextNumber);
+                System.out.println(oldResult + " " + op + " " + nextNumber + " = " + finalResult);
+            }
+        }
+        System.out.println(" = " + finalResult);
+        scan.close();
     }
 }
