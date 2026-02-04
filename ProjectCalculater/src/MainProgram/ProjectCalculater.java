@@ -2,37 +2,78 @@ package MainProgram;
 import java.util.Scanner;
 public class ProjectCalculater {
     static class Calculator {
-        public double calculate(double x, double y) { 
+        private double x;
+        private double y;
+
+        public Calculator(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public double getX() {
             return x;
-        } 
+        }
+        public double getY() {
+            return y;
+        }
+        public void setX(double x) {
+            this.x = x;
+        }
+        public void setY(double y) {
+            this.y = y;
+        }
+        public double calculate(){
+            return x;
+        }
     }
+    
     static class Add extends Calculator { 
-        public double calculate(double x, double y) { 
-            return x + y; 
+        public Add(double x , double y){
+            super(x , y);
+        }
+        @Override
+        public double calculate() { 
+            return getX() + getY(); 
         } 
     }
     static class Subtract extends Calculator { 
-        public double calculate(double x, double y) { 
-            return x - y; 
+        public Subtract(double x , double y){
+            super(x , y);
+        }
+        @Override
+        public double calculate() { 
+            return getX() - getY(); 
         } 
     }
     static class Multiply extends Calculator {
-        public double calculate(double x, double y) {
-            return x * y;
+        public Multiply(double x , double y){
+            super(x , y);
+        }
+        @Override
+        public double calculate() {
+            return getX() * getY();
         }
     }
     static class Divide extends Calculator {
-        public double calculate(double x, double y) {
-            if (y == 0) {
+        public Divide(double x , double y){
+            super(x , y);
+        } 
+        @Override
+        public double calculate() {
+            if (getY() == 0) {
                 System.out.println("It cannot be divided by 0.");
                 return 0;
             }
-            return x / y;
+            return getX() / getY();
         }
     }
     static class Percent extends Calculator {
-        public double calculate(double x, double y) { 
-            return (x * y) / 100; 
+        public Percent(double x , double y){
+            super(x , y);
+        } 
+        @Override
+        public double calculate() { 
+            return (getX() * getY()) / 100; 
         }
     }
 
@@ -40,6 +81,7 @@ public class ProjectCalculater {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter Number : ");
         String Sinput = input.nextLine(); 
+        
         double[] numbers = new double[100]; 
         char[] operators = new char[100];
         int numCount = 0;
@@ -48,14 +90,15 @@ public class ProjectCalculater {
         for (int i = 0; i < Sinput.length(); i++) {
             char c = Sinput.charAt(i);
             if (c != '+' && c != '-' && c != '*' && c != '/' && c != '%') {
-                tempNum += c;
+                tempNum = tempNum + c;
             }
             if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%' || i == Sinput.length() - 1) {
-                if(tempNum.isEmpty()) continue;
-                numbers[numCount++] = Double.valueOf(tempNum);
-                tempNum = ""; 
-                if (i < Sinput.length() - 1) {
-                    operators[opCount++] = c;
+                if(!tempNum.isEmpty()) {
+                    numbers[numCount++] = Double.parseDouble(tempNum);
+                    tempNum = ""; 
+                    if (i < Sinput.length() - 1) {
+                        operators[opCount++] = c;
+                    }
                 }
             }
         }
@@ -63,14 +106,17 @@ public class ProjectCalculater {
             char op = operators[i];
             if (op == '*' || op == '/' || op == '%') {
                 Calculator calc = null;
-                if (op == '*') calc = new Multiply();
-                else if (op == '/') calc = new Divide();
-                else if (op == '%') calc = new Percent();
-                double val1 = numbers[i];
-                double val2 = numbers[i+1];
-                double result = calc.calculate(val1, val2);
-                System.out.println("    Process: " + val1 + " " + op + " " + val2 + " = " + result);
+                if (op == '*') {
+                    calc = new Multiply(numbers[i], numbers[i + 1]);
+                }else if (op == '/') {
+                    calc = new Divide(numbers[i], numbers[i + 1]);
+                }else if (op == '%') {
+                    calc = new Percent(numbers[i], numbers[i + 1]);
+                }
+                double result = calc.calculate();
+                System.out.println("    Process: " + calc.getX() + " " + op + " " + calc.getY() + " = " + result);
                 numbers[i] = result;
+
                 for (int j = i + 1; j < numCount - 1; j++) {
                     numbers[j] = numbers[j + 1];
                 }
@@ -84,17 +130,15 @@ public class ProjectCalculater {
         }
         double finalResult = numbers[0];
         for (int i = 0; i < opCount; i++) {
-            char op = operators[i];
-            double nextNumber = numbers[i+1];
-            double oldResult = finalResult; 
-            Calculator calc = null;
-            if (op == '+') calc = new Add();
-            else if (op == '-') calc = new Subtract();
-            
-            if (calc != null) {
-                finalResult = calc.calculate(finalResult, nextNumber);
-                System.out.println("    Process: " + oldResult + " " + op + " " + nextNumber + " = " + finalResult);
+            Calculator calc;
+            if (operators[i] == '+') {
+                calc = new Add(finalResult, numbers[i + 1]);
+            }else {
+                calc = new Subtract(finalResult, numbers[i + 1]);
             }
+            double old = finalResult;
+            finalResult = calc.calculate();
+            System.out.println("    Process: " + old + " " + operators[i] + " " + calc.getY() + " = " + finalResult);
         }
         System.out.println("-----------------------------------");
         System.out.println("Output : " + finalResult);
