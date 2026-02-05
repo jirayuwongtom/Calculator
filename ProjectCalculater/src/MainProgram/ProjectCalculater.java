@@ -8,7 +8,7 @@ public class ProjectCalculater {
     }
     static class Add extends Calculator { 
         public double calculate(double x, double y) { 
-            return x - y;
+            return x + y;
         } 
     }
     static class Subtract extends Calculator { 
